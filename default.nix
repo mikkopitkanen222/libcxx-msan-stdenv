@@ -9,12 +9,19 @@ let
   libcxx-msan = llvmPackages.libcxx.overrideAttrs (oldAttrs: {
     pname = oldAttrs.pname + "-msan";
     cmakeFlags =
+      let
+        sharedFlags = lib.concatStringsSep " " [
+          # Put sanitizer headers on the include path.
+          "-isystem ${lib.getDev llvmPackages.compiler-rt-libc}/include"
+          # Silence unused "-rtlib=compiler-rt" (a link-only flag) compiler warnings.
+          "-Wno-unused-command-line-argument"
+        ];
+      in
       (oldAttrs.cmakeFlags or [ ])
       ++ (lib.mapAttrsToList lib.cmakeFeature {
         LLVM_USE_SANITIZER = "MemoryWithOrigins";
-        # Put sanitizer headers on the include path.
-        CMAKE_C_FLAGS = "-isystem ${lib.getDev llvmPackages.compiler-rt-libc}/include";
-        CMAKE_CXX_FLAGS = "-isystem ${lib.getDev llvmPackages.compiler-rt-libc}/include";
+        CMAKE_C_FLAGS = sharedFlags;
+        CMAKE_CXX_FLAGS = sharedFlags;
       });
   });
 
