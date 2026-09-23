@@ -5,7 +5,9 @@
 **MSan-instrumented clang+libc++ Nix stdenv**
 
 <p>
-<img alt="GitHub branch status" src="https://img.shields.io/github/checks-status/mikkopitkanen222/libcxx-msan-stdenv/master">
+<a href="https://github.com/mikkopitkanen222/libcxx-msan-stdenv/actions/workflows/checks.yml">
+<img alt="GitHub master branch status" src="https://github.com/mikkopitkanen222/libcxx-msan-stdenv/actions/workflows/checks.yml/badge.svg"/>
+</a>
 </p>
 
 </div>
