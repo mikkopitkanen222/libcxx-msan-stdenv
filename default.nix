@@ -41,6 +41,7 @@ let
   ];
 
   cc-msan = pkgs.wrapCCWith {
+    name = "clang-msan-wrapper";
     cc = llvmPackages.clang-unwrapped;
     libcxx = libcxx-msan;
     # bintools ships symbolizer; Symbolizer turns reported addresses to file:line locations.
