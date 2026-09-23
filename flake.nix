@@ -54,8 +54,14 @@
                 exit 1
               fi
 
-              if ! grep -q "WARNING: MemorySanitizer: use-of-uninitialized-value" output.log; then
-                echo "FAIL: process exited 99, but the expected MemorySanitizer report text wasn't found in output" >&2
+              if ! grep -q "WARNING: MemorySanitizer: use-of-uninitialized-value$" output.log; then
+                echo "FAIL: expected MemorySanitizer report text wasn't found in output" >&2
+                cat output.log >&2
+                exit 1
+              fi
+
+              if ! grep -qE "^SUMMARY: MemorySanitizer: use-of-uninitialized-value /build/test\.cpp:[0-9]+:[0-9]+ in main$" output.log; then
+                echo "FAIL: expected MemorySanitizer to symbolize the error location" >&2
                 cat output.log >&2
                 exit 1
               fi
