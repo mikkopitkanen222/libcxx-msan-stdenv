@@ -46,8 +46,9 @@ let
     libcxx = libcxx-msan;
     # bintools ships symbolizer; Symbolizer turns reported addresses to file:line locations.
     bintools = llvmPackages.bintools;
+    # compiler-rt ships sanitizer headers (sanitizer/msan_interface.h).
     extraPackages = [ llvmPackages.compiler-rt ];
-    # clang-unwrapped only ships the headers.
+    # clang-unwrapped only ships its builtin headers.
     # compiler-rt ships the sanitizer runtime archives (libclang_rt.msan*.a).
     extraBuildCommands =
       let
